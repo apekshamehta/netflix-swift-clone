@@ -7,10 +7,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GroupingTitles: UIViewController {
     
+    // MARK: - IBOutlets
+    @IBOutlet weak var scrView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var tblVwSearchResult: UITableView!
+    @IBOutlet weak var consHeightForTblSearchResult: NSLayoutConstraint!
     
+    // MARK: - Variables
+    var searchResults:[String] = []
     
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         var titles:Set<String> = ["duel","duel","dule","speed","spede","cars"]
@@ -30,7 +40,9 @@ class ViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-
+    
+    // MARK: - Custom Methods
+    
     func groupTitles(_ strs:inout Set<String>,_ output:inout Set<Set<String>>){
         
         if strs.count == 0
@@ -79,3 +91,22 @@ class ViewController: UIViewController {
 
 }
 
+extension GroupingTitles:UITableViewDelegate,UITableViewDataSource{
+    
+    // MARK: - TableView Delegate and Datasource methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        if cell == nil {
+            cell = UITableViewCell.init(style: .default, reuseIdentifier: "cell")
+        }
+        return cell!
+        
+    }
+    
+    
+}
